@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "out-tsc",
+    "module": "es6",
+    "moduleResolution": "node",
+    "target": "es5",
+    "allowJs": true
+  },
+  "files": [
+    "src/index.ts"
+  ]
+}
