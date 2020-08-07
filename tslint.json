@@ -7,7 +7,10 @@
         "statements"
       ]
     },
-    "array-type": true,
+    "array-type": [
+      true,
+      "array"
+    ],
     "arrow-return-shorthand": true,
     "curly": true,
     "deprecation": {
@@ -111,6 +114,7 @@
         "check-typecast"
       ]
     },
+    "no-string-literal": false,
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": true,
     "no-input-rename": true,

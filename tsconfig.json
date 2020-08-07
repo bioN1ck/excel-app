@@ -1,11 +1,27 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "out-tsc",
-    "module": "es6",
     "moduleResolution": "node",
+    "module": "es6",
     "target": "es5",
-    "allowJs": true
+    "allowJs": true,
+    "sourceMap": true,
+    "paths": {
+      "@core/*": ["src/core/*"],
+      "@components/*": ["src/components/*"],
+      "@models/*": ["src/models/*"],
+      "@utils": ["src/core/utils.ts"]
+    },
+    "lib": [
+      "DOM",
+      "ESNext"
+    ]
   },
+  "include": [
+    "src/**/*"
+  ],
   "files": [
     "src/index.ts"
   ]

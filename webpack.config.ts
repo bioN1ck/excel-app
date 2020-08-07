@@ -18,9 +18,12 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, 'src'),
       '@core': path.resolve(__dirname, 'src/core'),
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@models': path.resolve(__dirname, 'src/models'),
+      '@utils': path.resolve(__dirname, 'src/core/utils.ts'),
     },
   },
-  devtool: 'source-map',
+  // devtool: 'source-map',
   devServer: {
     port: 4200,
     hot: true,
@@ -64,7 +67,7 @@ module.exports = {
       //   exclude: /node_modules/,
       // },
       {
-        test: /\.tsx?$/,
+        test: /\.ts$/,
         loader: 'awesome-typescript-loader',
       },
       {
