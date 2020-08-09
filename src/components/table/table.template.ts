@@ -5,20 +5,29 @@ const CODES = {
 };
 
 function createRow(index: number | string, content: string) {
+  const resize = index ? '<div class="row-resize" data-resize="row"></div>' : '';
   return `
-    <div class="row">
-      <div class="row-info">${index}</div>
+    <div class="row" data-type="resizable">
+      <div class="row-info">
+        ${index}
+        ${resize}
+      </div>
       <div class="row-data">${content}</div>
     </div>
   `;
 }
 
-function toColumn(col: string) {
-  return `<div class="column">${col}</div>`;
+function toColumn(col: string, index: number) {
+  return `
+    <div class="column" data-type="resizable" data-col="${index}">
+      ${col}
+      <div class="col-resize" data-resize="col"></div>
+    </div>
+  `;
 }
 
-function toCell() {
-  return `<div class="cell" contenteditable></div>`;
+function toCell(_: null, col: number) {
+  return `<div class="cell" contenteditable data-col="${col}"></div>`;
 }
 
 function toChar(_: null, index: number) {

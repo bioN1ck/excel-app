@@ -1,4 +1,3 @@
-
 export class DomElement {
 
   public nativeElement: HTMLElement;
@@ -43,6 +42,29 @@ export class DomElement {
 
     return this;
   }
+
+  public closest(selector: string): DomElement {
+    return $(this.nativeElement.closest(selector) as HTMLElement);
+  }
+
+  public getCoords(): DOMRect {
+    return this.nativeElement.getBoundingClientRect();
+  }
+
+  public get data(): DOMStringMap {
+    return this.nativeElement.dataset;
+  }
+
+  public findAll(selector: string): NodeList {
+    return this.nativeElement.querySelectorAll(selector);
+  }
+
+  public css(styles: Partial<CSSStyleDeclaration>): void {
+    Object.keys(styles).forEach(style => {
+      this.nativeElement.style[style] = styles[style];
+    });
+  }
+
 }
 
 export function $(selector: string | HTMLElement): DomElement {
