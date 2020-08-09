@@ -1,6 +1,37 @@
 @import 'variables';
 @import 'mixins';
 
+%resize {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: $primary-color;
+  opacity: 0;
+  z-index: 1000;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    background-color: $primary-color;
+    opacity: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  &:active {
+    opacity: 1;
+  }
+
+  &:active::after {
+    opacity: 1;       
+  }
+}
+
+
 .excel__table {
   position: absolute;
   left: 0;
@@ -24,10 +55,31 @@
       border: 1px solid $border-color;
       background-color: #f8f9fa;
       border-top: none;
+      position: relative;
+      user-select: none;
+
+      .row-resize {
+        @extend %resize;
+        height: 5px;
+        left: 0;
+
+        &:hover {
+          cursor: row-resize;
+        }
+
+        &::after {
+          height: 1px;
+          left: 0;
+        }
+
+        &:active::after {
+          right: -2000px;       
+        }
+      }
     }
+
     &-data {
       display: flex;
-
     }
   }
 
@@ -42,6 +94,27 @@
     border-top: 0;
     border-left: 0;
     height: 100%;
+    position: relative;
+    user-select: none;
+
+    .col-resize {
+      @extend %resize;
+      top: 0;
+      width: 5px;
+
+      &:hover {
+        cursor: ew-resize;
+      }
+
+      &::after {
+        width: 1px;       
+        top: 0;
+      }
+
+      &:active::after {
+        bottom: -2000px;       
+      }
+    }
   }
 
   .cell {
@@ -58,8 +131,9 @@
 
     &.selected {
       border: none;
-      outline: 2px solid #3c74ff;
+      outline: 2px solid $primary-color;
       z-index: 2;
     }
   }
+
 }
