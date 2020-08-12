@@ -1,9 +1,18 @@
 import { ExcelComponent } from '@components/excel/excel.component';
+import { DomElement } from '@core/dom-element';
+import { ComponentOptions } from '@models/excel.model';
 
 export class HeaderComponent extends ExcelComponent {
   static className = 'excel__header';
 
-  toHTML(): string {
+  constructor($root: DomElement, options: ComponentOptions) {
+    super($root, {
+      name: 'Header',
+      ...options,
+    });
+  }
+
+  public toHTML(): string {
     return `
       <input type="text" class="input" value="New table">
       <div>
