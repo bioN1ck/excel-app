@@ -132,6 +132,7 @@
     &.selected {
       border: none;
       outline: 2px solid $primary-color;
+      outline-offset: -1px;
       z-index: 2;
     }
   }

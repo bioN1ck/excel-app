@@ -1,4 +1,4 @@
-import { DomElement } from './dom-utils';
+import { DomElement } from './dom-element';
 import { capitalize } from '@utils';
 
 export class DomListener {
@@ -6,12 +6,12 @@ export class DomListener {
   public listeners: string[];
   public name: string;
 
-  constructor($root: DomElement, listeners = []) {
+  constructor($root: DomElement, listeners: string[]) {
     if (!$root) {
       throw new Error('No $root provided from DomListener');
     }
     this.$root = $root;
-    this.listeners = listeners;
+    this.listeners = listeners || [];
   }
 
   public initDOMListeners(): void {

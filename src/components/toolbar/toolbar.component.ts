@@ -1,17 +1,19 @@
 import { ExcelComponent } from '@components/excel/excel.component';
-import { DomElement } from '@core/dom-utils';
+import { DomElement } from '@core/dom-element';
+import { ComponentOptions } from '@models/excel.model';
 
 export class ToolbarComponent extends ExcelComponent {
+
   static className = 'excel__toolbar';
 
-  constructor($root: DomElement) {
+  constructor($root: DomElement, options: ComponentOptions) {
     super($root, {
       name: 'Toolbar',
-      listeners: ['click'],
+      ...options,
     });
   }
 
-  toHTML(): string {
+  public toHTML(): string {
     return `
       <div class="button">
         <i class="material-icons">format_align_left</i>
@@ -34,7 +36,4 @@ export class ToolbarComponent extends ExcelComponent {
     `;
   }
 
-  onClick(event: MouseEvent) {
-    console.log(event.target);
-  }
 }

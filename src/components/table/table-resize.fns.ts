@@ -1,5 +1,5 @@
-import { DomElement } from '@core/dom-utils';
-import { $ } from '@core/dom-utils';
+import { DomElement } from '@core/dom-element';
+import { $ } from '@core/dom-element';
 
 enum Direction {
   COL = 'col',
@@ -7,7 +7,8 @@ enum Direction {
 }
 
 
-export function resizeHandler($root: DomElement, target: HTMLDivElement) {
+export function resizeHandler($root: DomElement, target: HTMLDivElement): void {
+
   const $resizer = $(target);
   const $parent = $resizer.closest('[data-type="resizable"]');
 
@@ -16,13 +17,13 @@ export function resizeHandler($root: DomElement, target: HTMLDivElement) {
   let width: number;
   let height: number;
 
-  document.onmousemove = ({pageX, pageY}: MouseEvent): void => {
+  document.onmousemove = ({clientX, clientY}: MouseEvent): void => {
     if (direction === Direction.COL) {
-      const delta = pageX - coords.right;
+      const delta = clientX - coords.right;
       $resizer.css({right: -delta + 'px'});
       width = coords.width + delta;
     } else {
-      const delta = pageY - coords.bottom;
+      const delta = clientY - coords.bottom;
       $resizer.css({bottom: -delta + 'px'});
       height = coords.height + delta;
     }
