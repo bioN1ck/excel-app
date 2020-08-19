@@ -1,8 +1,10 @@
 import { DomElement } from '@core/dom-element';
 import { CellCoords } from '@models/excel.model';
 import { matrix } from './table-helper.fns';
+import { ToolbarState } from '@models/store.model';
 
 export class TableSelection {
+
   static className = 'selected';
 
   private group: DomElement[];
@@ -31,10 +33,18 @@ export class TableSelection {
     this.group = [];
   }
 
+  public get selectedIds(): string[] {
+    return this.group.map($el => $el.id() as string);
+  }
+
   public handleGroupSelect($startCell: DomElement, $root: DomElement): void {
     const startCell = $startCell.id(true) as CellCoords;
     const endCell = this.current.id(true) as CellCoords;
     const $cells = matrix(startCell, endCell).map(id => $root.find(`[data-id="${id}"]`));
     this.selectGroup($cells);
+  }
+
+  public applyStyle(style: Partial<ToolbarState>): void {
+    this.group.forEach($el => $el.css(style));
   }
 }

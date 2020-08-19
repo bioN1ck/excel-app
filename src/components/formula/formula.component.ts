@@ -1,7 +1,8 @@
 import { $ } from '@core/dom-element';
 import { ExcelComponent } from '@components/excel/excel.component';
 import { DomElement } from '@core/dom-element';
-import { ComponentOptions } from '@models/excel.model';
+import { ComponentOptions, EventKey } from '@models/excel.model';
+import { StateKey } from '@models/store.model';
 
 export class FormulaComponent extends ExcelComponent {
   static className = 'excel__formula';
@@ -10,7 +11,8 @@ export class FormulaComponent extends ExcelComponent {
   constructor($root: DomElement, options: ComponentOptions) {
     super($root, {
       name: 'Formula',
-      listeners: ['input', 'keydown'],
+      listeners: [EventKey.INPUT, EventKey.KEYDOWN],
+      subscribe: [StateKey.CURRENT_TEXT],
       ...options,
     });
   }
@@ -33,12 +35,12 @@ export class FormulaComponent extends ExcelComponent {
     this.$formula = this.$root.find('#formula');
 
     this.$on('table:select', ($cell: DomElement) => {
-      this.$formula.text($cell.text() as string);
+      this.$formula.text($cell.data.value);
     });
+  }
 
-    this.$on('table:input', ($cell: DomElement) => {
-      this.$formula.text($cell.text() as string);
-    });
+  public storeChanged({currentText}: {[StateKey.CURRENT_TEXT]: string}): void {
+    this.$formula.text(currentText);
   }
 
   public onInput({target}: InputEvent): void {
