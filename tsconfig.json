@@ -12,7 +12,9 @@
       "@core/*": ["src/core/*"],
       "@components/*": ["src/components/*"],
       "@models/*": ["src/models/*"],
-      "@utils": ["src/core/utils.ts"]
+      "@utils": ["src/core/utils.ts"],
+      "@store/*": ["src/store/*"],
+      "@constants": ["src/constants.ts"]
     },
     "lib": [
       "DOM",

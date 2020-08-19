@@ -21,6 +21,8 @@ module.exports = {
       '@components': path.resolve(__dirname, 'src/components'),
       '@models': path.resolve(__dirname, 'src/models'),
       '@utils': path.resolve(__dirname, 'src/core/utils.ts'),
+      '@store': path.resolve(__dirname, 'src/store'),
+      '@constants': path.resolve(__dirname, 'src/constants.ts'),
     },
   },
   // devtool: 'source-map',

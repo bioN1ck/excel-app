@@ -6,8 +6,11 @@ import { createTable } from './table-template.fns';
 import { resizeHandler } from './table-resize.fns';
 import { shouldResize, shouldSelect, nextSelection } from './table-helper.fns';
 import { TableSelection } from './table-selection.component';
-import { CellCoords, ComponentOptions } from '@models/excel.model';
-
+import { CellCoords, ComponentOptions, EventKey } from '@models/excel.model';
+import * as actions from '@store/actions';
+import { ToolbarState } from '@models/store.model';
+import { DEFAULT_STYLES } from '@constants';
+import { parse } from '@core/utils';
 
 export class TableComponent extends ExcelComponent {
 
@@ -17,13 +20,13 @@ export class TableComponent extends ExcelComponent {
   constructor($root: DomElement, options: ComponentOptions) {
     super($root, {
       name: 'Table',
-      listeners: ['mousedown', 'keydown', 'input'],
+      listeners: [EventKey.MOUSEDOWN, EventKey.KEYDOWN, EventKey.INPUT],
       ...options,
     });
   }
 
   public toHTML(): string {
-    return createTable();
+    return createTable(20, this.store.getState());
   }
 
   public prepare(): void {
@@ -32,29 +35,55 @@ export class TableComponent extends ExcelComponent {
 
   public init(): void {
     super.init();
+    this.prepare();
 
     this.selectCell(this.$root.find('[data-id="0:0"]'));
 
     // Подписываемся на события инпута (компонент - формула)
-    this.$on('formula:input', (text: string) => {
-      this.selection.current.text(text);
+    this.$on('formula:input', (value: string) => {
+      (this.selection.current
+        .attr('data-value', value) as DomElement)
+        .text(parse(value));
+
+      this.updateTextInStore(value);
     });
 
     // Подписка на нажатие Enter или Tab
     this.$on('formula:done', () => {
       this.selection.current.focus();
     });
+
+    this.$on('toolbar:applyStyle', (styles: ToolbarState) => {
+      this.selection.applyStyle(styles);
+      this.$dispatch(actions.applyStyle({
+        ids: this.selection.selectedIds,
+        styles,
+      }));
+    });
   }
 
   private selectCell($cell: DomElement): void {
     this.selection.select($cell);
-    this.$next('table:input', $cell);
+    // this.updateTextInStore($cell.text() as string);
+    this.$next('table:select', $cell);
+    const styles = $cell.getStyles(Object.keys(DEFAULT_STYLES));
+    this.$dispatch(actions.changeStyles({styles}));
+  }
+
+  private async resizeTable(event: HTMLDivElement): Promise<void> {
+    try {
+      const data = await resizeHandler(this.$root, event);
+      this.$dispatch(actions.tableResize(data));
+    } catch (e) {
+      console.warn('Resize error: ', e.message);
+    }
   }
 
   public onMousedown(event: MouseEvent): void {
     const element = event.target as HTMLDivElement;
     if (shouldResize(element)) {
-      resizeHandler(this.$root, element);
+      // resizeHandler(this.$root, element);
+      this.resizeTable(element);
     }
     if (shouldSelect(element)) {
       const $cell = $(element);
@@ -65,7 +94,7 @@ export class TableComponent extends ExcelComponent {
         // this.selection.selectGroup($cells);
         this.selection.handleGroupSelect($cell, this.$root);
       } else {
-        this.selection.select($cell);
+        this.selectCell($cell);
       }
     }
   }
@@ -80,8 +109,15 @@ export class TableComponent extends ExcelComponent {
     }
   }
 
+  private updateTextInStore(value: string): void {
+    this.$dispatch(actions.changeText({
+      id: this.selection.current.id() as string,
+      value,
+    }));
+  }
+
   public onInput({target}: InputEvent): void {
-    this.$next('table:input', $(target as HTMLDivElement));
+    this.updateTextInStore($(target as HTMLDivElement).text() as string);
   }
 
   public destroy(): void {

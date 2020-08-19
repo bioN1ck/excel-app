@@ -1,4 +1,5 @@
 import { CellCoords } from '@models/excel.model';
+import { ToolbarState } from '@models/store.model';
 
 export class DomElement {
 
@@ -19,7 +20,7 @@ export class DomElement {
   }
 
   public text(message?: string): DomElement|string {
-    if (typeof message === 'string') {
+    if (typeof message !== 'undefined') {
       this.nativeElement.textContent = message;
       return this;
     }
@@ -85,6 +86,13 @@ export class DomElement {
     return this;
   }
 
+  public getStyles(styles: string[] = []): ToolbarState {
+    return styles.reduce((res, style: string) => {
+      res[style] = this.nativeElement.style[style];
+      return res;
+    }, {}) as ToolbarState;
+  }
+
   public addClass(className: string): DomElement {
     this.nativeElement.classList.add(className);
     return this;
@@ -106,6 +114,14 @@ export class DomElement {
   public focus(): DomElement {
     this.nativeElement.focus();
     return this;
+  }
+
+  public attr(name: string, value: string): DomElement|string {
+    if (typeof value !== 'undefined') {
+      this.nativeElement.setAttribute(name, value);
+      return this;
+    }
+    return this.nativeElement.getAttribute(name);
   }
 
 }
