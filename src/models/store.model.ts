@@ -1,5 +1,6 @@
 export enum StateKey {
   TITLE = 'title',
+  OPENED_AT = 'openedAt',
   COL_STATE = 'colState',
   ROW_STATE = 'rowState',
   DATA_STATE = 'dataState',
@@ -10,6 +11,7 @@ export enum StateKey {
 
 export interface State {
   [StateKey.TITLE]: string;
+  [StateKey.OPENED_AT]: string;
   [StateKey.COL_STATE]: ResizeState;
   [StateKey.ROW_STATE]: ResizeState;
   [StateKey.DATA_STATE]: DataState;
@@ -37,6 +39,7 @@ export enum ActionType {
   APPLY_STYLE = 'APPLY_STYLE',
   CURRENT_STYLE = 'CURRENT_STYLE',
   CHANGE_TITLE = 'CHANGE_TITLE',
+  UPDATE_DATE = 'UPDATE_DATE',
 }
 
 export type SubState = ResizeState|DataState|StyleState|string|ToolbarState;

@@ -20,13 +20,17 @@ export class TableComponent extends ExcelComponent {
   constructor($root: DomElement, options: ComponentOptions) {
     super($root, {
       name: 'Table',
-      listeners: [EventKey.MOUSEDOWN, EventKey.KEYDOWN, EventKey.INPUT],
+      listeners: [
+        EventKey.MOUSEDOWN,
+        EventKey.KEYDOWN,
+        EventKey.INPUT,
+      ],
       ...options,
     });
   }
 
   public toHTML(): string {
-    return createTable(20, this.store.getState());
+    return createTable(30, this.store.getState());
   }
 
   public prepare(): void {

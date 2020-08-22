@@ -36,3 +36,9 @@ export function changeTitle(payload: Payload): Action {
     payload,
   };
 }
+
+export function updateDate(): Action {
+  return {
+    type: ActionType.UPDATE_DATE,
+  };
+}

@@ -14,7 +14,8 @@
       "@models/*": ["src/models/*"],
       "@utils": ["src/core/utils.ts"],
       "@store/*": ["src/store/*"],
-      "@constants": ["src/constants.ts"]
+      "@constants": ["src/constants.ts"],
+      "@pages/*": ["src/pages/*"]
     },
     "lib": [
       "DOM",
