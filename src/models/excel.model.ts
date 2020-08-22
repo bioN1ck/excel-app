@@ -1,7 +1,7 @@
-import { Emitter } from '@core/emitter';
-import { DomElement } from '@core/dom-element';
-import { Store } from '@store/store';
-import { StateKey, ToolbarState } from '@models/store.model';
+import type { Emitter } from '@core/emitter';
+import type { DomElement } from '@core/dom-element';
+import type { Store } from '@store/store';
+import type { StateKey, ToolbarState } from '@models/store.model';
 
 
 export enum EventKey {

@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -23,6 +24,7 @@ module.exports = {
       '@utils': path.resolve(__dirname, 'src/core/utils.ts'),
       '@store': path.resolve(__dirname, 'src/store'),
       '@constants': path.resolve(__dirname, 'src/constants.ts'),
+      '@pages': path.resolve(__dirname, 'src/pages'),
     },
   },
   // devtool: 'source-map',
@@ -45,6 +47,9 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'bundle.css',
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
   ],
   module: {

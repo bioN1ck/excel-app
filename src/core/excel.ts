@@ -4,6 +4,7 @@ import { Emitter } from '@core/emitter';
 import { ComponentOptions } from '@models/excel.model';
 import { Store } from '@store/store';
 import { StoreSubscriber } from '@store/store-subscriber';
+import { updateDate } from '@store/actions';
 
 
 interface InitOptions {
@@ -13,15 +14,13 @@ interface InitOptions {
 
 export class Excel {
 
-  private $excel: DomElement;
   private components: typeof ExcelComponent[];
   private instances: ExcelComponent[];
   private emitter: Emitter;
   private store: Store;
   private subscriber: StoreSubscriber;
 
-  constructor(selector: string, options: InitOptions) {
-    this.$excel = $(selector);
+  constructor(options: InitOptions) {
     this.components = options.components || [];
     this.store = options.store;
     this.emitter = new Emitter();
@@ -47,8 +46,8 @@ export class Excel {
     return $root;
   }
 
-  public render(): void {
-    this.$excel.append(this.getRoot());
+  public init(): void {
+    this.store.dispatch(updateDate());
     this.subscriber.subscribeComponents(this.instances);
     this.instances.forEach((component: ExcelComponent) => component.init());
   }

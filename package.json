@@ -1,13 +1,14 @@
 {
   "name": "excel-app",
   "version": "1.0.0",
-  "description": "Excel written by JavaScript",
+  "description": "Excel written by TypeScript",
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=development webpack-dev-server --open",
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "start:ts": "webpack-dev-server --config webpack.config.ts",
+    "build:ts": "webpack --mode production --config webpack.config.ts",
     "tslint": "tslint"
   },
   "repository": {
